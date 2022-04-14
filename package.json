@@ -14,6 +14,9 @@
     "email": "liangxiegame@163.com",
     "url": "https://qframework.cn"
   },
+  "dependencies": {
+    "com.unity.nuget.newtonsoft-json": "3.0.1"
+  },
   "samples": [
     {
       "displayName": "Example",
