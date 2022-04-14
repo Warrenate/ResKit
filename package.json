@@ -16,9 +16,9 @@
   },
   "samples": [
     {
-      "displayName": "Demo",
-      "description": "Start Scene Demo",
-      "path": "Samples~/Demo"
+      "displayName": "Example",
+      "description": "Example Collections",
+      "path": "Samples~/Example"
     }
   ]
 }
