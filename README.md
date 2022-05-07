@@ -15,6 +15,11 @@
     * 或者国内镜像仓库：https://gitee.com/liangxiegame/ResKit.git
 * 或者[点此下载 ResKit.unitypackage](ResKit.unitypackage) 并安装到自己项目中的任意脚本中
 
+## il2cpp
+
+* 使用il2cpp脚本后端，会有代码剥离问题
+    * 将根目录下的Link.xml添加到项目Assets或其子目录下
+
 ## 使用指南
 
 ``` csharp
