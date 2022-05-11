@@ -132,27 +132,49 @@ namespace QFramework
         /// <returns></returns>
         public T LoadSync<T>(string assetName) where T :Object
         {
-            if (typeof(T) == typeof(Sprite))
+            // if (typeof(T) == typeof(Sprite))
+            // {
+            //     if (AssetBundlePathHelper.SimulationMode)
+            //     {
+            //         return LoadSprite(assetName) as T;
+            //     }
+            //     else
+            //     {
+            //         var resSearchKeys = ResSearchKeys.Allocate(assetName, null, typeof(T));
+            //         var retAsset = LoadResSync(resSearchKeys);
+            //         resSearchKeys.Recycle2Cache();
+            //         return retAsset.Asset as T;
+            //     }
+            // }
+            // else
+            // {
+            //     var resSearchKeys = ResSearchKeys.Allocate(assetName, null, typeof(T));
+            //     var retAsset = LoadResSync(resSearchKeys);
+            //     resSearchKeys.Recycle2Cache();
+            //     return retAsset.Asset as T;
+            // }
+
+            ResSearchKeys resSearchKeys;
+            IRes retAsset;
+            if (typeof(T) == typeof(Texture2D) || typeof(T) == typeof(Texture))
             {
-                if (AssetBundlePathHelper.SimulationMode)
-                {
-                    return LoadSprite(assetName) as T;
-                }
-                else
-                {
-                    var resSearchKeys = ResSearchKeys.Allocate(assetName, null, typeof(T));
-                    var retAsset = LoadResSync(resSearchKeys);
-                    resSearchKeys.Recycle2Cache();
-                    return retAsset.Asset as T;
-                }
-            }
-            else
-            {
-                var resSearchKeys = ResSearchKeys.Allocate(assetName, null, typeof(T));
-                var retAsset = LoadResSync(resSearchKeys);
+                // Texture2D类型，先检查自己，没有的话再去找同名Sprite，
+                // 因为RawImage可以接受Sprite
+                resSearchKeys = ResSearchKeys.Allocate(assetName, null, typeof(T));
+                retAsset = LoadResSync(resSearchKeys);
                 resSearchKeys.Recycle2Cache();
-                return retAsset.Asset as T;
-            }          
+                var asset = retAsset.Asset as T;
+                if (asset != null)
+                    return asset;
+                
+                var sprite = LoadSync<Sprite>(assetName);
+                return sprite ? sprite.texture as T : null;
+            }
+            
+            resSearchKeys = ResSearchKeys.Allocate(assetName, null, typeof(T));
+            retAsset = LoadResSync(resSearchKeys);
+            resSearchKeys.Recycle2Cache();
+            return retAsset.Asset as T;
         }
 
 

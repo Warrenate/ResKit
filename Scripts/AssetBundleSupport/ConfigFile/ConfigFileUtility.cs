@@ -36,6 +36,13 @@ namespace QFramework
                 foreach (var cell in assets)
                 {
                     var type = AssetDatabase.GetMainAssetTypeAtPath(cell);
+                    // 这里Sprite类型特殊处理，Spirte比较常用，以此为主
+                    if (type == typeof(Texture2D))
+                    {
+                        var importer = AssetImporter.GetAtPath(cell) as TextureImporter;
+                        if (importer && importer.textureType == TextureImporterType.Sprite)
+                            type = typeof(Sprite);
+                    }
 
                     var code = type.ToCode();
 
